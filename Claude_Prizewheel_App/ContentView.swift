@@ -5,15 +5,14 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var viewModel = WheelViewModel()
     @State private var winnerItem: WheelItem?
-    @State private var showWinnerSheet = false
     @State private var showItemsSheet = false
+    @State private var showHistorySheet = false
 
     var body: some View {
         NavigationStack {
             PrizeWheelView(items: viewModel.items) { winner in
-                winnerItem = winner
-                showWinnerSheet = true
                 viewModel.recordWin(winner, context: modelContext)
+                winnerItem = winner
             }
             .padding()
             .toolbar {
@@ -24,24 +23,19 @@ struct ContentView: View {
                         Image(systemName: "list.bullet")
                     }
                 }
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        showHistorySheet = true
+                    } label: {
+                        Image(systemName: "trophy")
+                    }
+                }
             }
         }
         .onAppear {
             viewModel.fetchItems(context: modelContext)
         }
-        .sheet(isPresented: $showWinnerSheet) {
-            winnerSheet
-        }
-        .sheet(isPresented: $showItemsSheet) {
-            WheelItemsView(viewModel: viewModel)
-        }
-    }
-
-    // MARK: - Winner Sheet
-
-    @ViewBuilder
-    private var winnerSheet: some View {
-        if let winner = winnerItem {
+        .sheet(item: $winnerItem) { winner in
             VStack(spacing: 24) {
                 Text("Winner!")
                     .font(.title2.bold())
@@ -56,13 +50,19 @@ struct ContentView: View {
                     .font(.largeTitle.bold())
 
                 Button("Spin Again") {
-                    showWinnerSheet = false
+                    winnerItem = nil
                 }
                 .font(.title3.bold())
                 .buttonStyle(.borderedProminent)
             }
             .padding()
             .presentationDetents([.medium])
+        }
+        .sheet(isPresented: $showItemsSheet) {
+            WheelItemsView(viewModel: viewModel)
+        }
+        .sheet(isPresented: $showHistorySheet) {
+            WinHistoryView()
         }
     }
 }

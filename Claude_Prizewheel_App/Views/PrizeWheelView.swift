@@ -39,12 +39,6 @@ struct PrizeWheelView: View {
                     .frame(width: wheelDiameter, height: wheelDiameter)
                     .rotationEffect(.degrees(rotationDegrees))
                     .scaleEffect(isPulsing ? 1.03 : 1.0)
-                    .animation(
-                        isPulsing
-                            ? .easeInOut(duration: 0.8).repeatForever(autoreverses: true)
-                            : .default,
-                        value: isPulsing
-                    )
             }
             .frame(width: size, height: size)
         }
@@ -107,8 +101,12 @@ struct PrizeWheelView: View {
             let winnerIndex = calculateWinnerIndex()
             isSpinning = false
             highlightedItemID = items[winnerIndex].id
-            isPulsing = true
             winTrigger += 1
+
+            withAnimation(.easeInOut(duration: 0.8).repeatForever(autoreverses: true)) {
+                isPulsing = true
+            }
+
             onWin(items[winnerIndex])
         }
     }

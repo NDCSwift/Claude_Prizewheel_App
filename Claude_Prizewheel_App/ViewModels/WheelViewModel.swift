@@ -17,8 +17,8 @@ final class WheelViewModel {
                 for item in WheelItem.defaults {
                     context.insert(item)
                 }
+                try context.save()
                 items = try context.fetch(descriptor)
-                
             }
         } catch {
             items = []
@@ -35,13 +35,14 @@ final class WheelViewModel {
 
     func addItem(_ item: WheelItem, context: ModelContext) {
         context.insert(item)
+        try? context.save()
         fetchItems(context: context)
-        
     }
 
     func updateItem(_ item: WheelItem, name: String, colorHex: String, context: ModelContext) {
         item.name = name
         item.colorHex = colorHex
+        try? context.save()
         fetchItems(context: context)
     }
 

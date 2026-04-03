@@ -18,7 +18,19 @@ extension Color {
     }
 
     /// Whether this colour is perceptually dark (WCAG relative luminance).
+    var isDark: Bool {
+        let uiColor = UIColor(self)
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
 
+        uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+
+        // WCAG relative luminance formula
+        let luminance = 0.2126 * red + 0.7152 * green + 0.0722 * blue
+        return luminance < 0.5
+    }
 
     /// Converts this Color to a hex string like "#FF5733".
     func toHex() -> String {

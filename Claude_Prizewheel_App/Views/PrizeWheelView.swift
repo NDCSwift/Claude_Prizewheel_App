@@ -7,16 +7,20 @@ struct PrizeWheelView: View {
 
     @State private var rotationDegrees: Double = 0
     @State private var isSpinning = false
+    @State private var highlightedItemID: UUID?
+    @State private var isPulsing = false
+    @State private var winTrigger = 0
 
-    private let pointerHeight: CGFloat = 28
+    private let pointerHeight: CGFloat = 36
 
     var body: some View {
         VStack(spacing: 20) {
             wheelSection
             if showSpinButton {
-                spinButton
+                spinArea
             }
         }
+        .sensoryFeedback(.success, trigger: winTrigger)
     }
 
     // MARK: - Wheel + Pointer
@@ -34,10 +38,29 @@ struct PrizeWheelView: View {
                 wheelCanvas(radius: wheelRadius)
                     .frame(width: wheelDiameter, height: wheelDiameter)
                     .rotationEffect(.degrees(rotationDegrees))
+                    .scaleEffect(isPulsing ? 1.03 : 1.0)
+                    .animation(
+                        isPulsing
+                            ? .easeInOut(duration: 0.8).repeatForever(autoreverses: true)
+                            : .default,
+                        value: isPulsing
+                    )
             }
             .frame(width: size, height: size)
         }
         .aspectRatio(1, contentMode: .fit)
+    }
+
+    // MARK: - Spin Area
+
+    @ViewBuilder
+    private var spinArea: some View {
+        if items.count < 2 {
+            Text("Add at least 2 items to spin")
+                .foregroundStyle(.secondary)
+        } else {
+            spinButton
+        }
     }
 
     // MARK: - Spin Button
@@ -46,13 +69,21 @@ struct PrizeWheelView: View {
         Button {
             spin()
         } label: {
-            Text("SPIN")
-                .font(.title2.bold())
-                .foregroundStyle(.white)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 14)
-                .background(isSpinning ? Color.gray : Color.blue, in: .capsule)
+            Group {
+                if isSpinning {
+                    ProgressView()
+                        .tint(.white)
+                } else {
+                    Text("SPIN")
+                        .font(.title2.bold())
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 6)
         }
+        .buttonStyle(.borderedProminent)
+        .buttonBorderShape(.capsule)
+        .controlSize(.large)
         .disabled(isSpinning)
         .padding(.horizontal)
     }
@@ -62,6 +93,8 @@ struct PrizeWheelView: View {
     private func spin() {
         guard !items.isEmpty else { return }
         isSpinning = true
+        highlightedItemID = nil
+        isPulsing = false
 
         let extraDegrees = Double.random(in: 1800...3600)
         let targetDegrees = rotationDegrees + extraDegrees
@@ -73,6 +106,9 @@ struct PrizeWheelView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
             let winnerIndex = calculateWinnerIndex()
             isSpinning = false
+            highlightedItemID = items[winnerIndex].id
+            isPulsing = true
+            winTrigger += 1
             onWin(items[winnerIndex])
         }
     }
@@ -99,7 +135,7 @@ struct PrizeWheelView: View {
 
     private var pointer: some View {
         Canvas { context, size in
-            let baseWidth: CGFloat = 20
+            let baseWidth: CGFloat = 28
             var path = Path()
             path.move(to: CGPoint(x: size.width / 2, y: size.height))
             path.addLine(to: CGPoint(x: size.width / 2 - baseWidth / 2, y: 0))
@@ -107,8 +143,8 @@ struct PrizeWheelView: View {
             path.closeSubpath()
 
             context.drawLayer { ctx in
-                ctx.addFilter(.shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 2))
-                ctx.fill(path, with: .color(.red))
+                ctx.addFilter(.shadow(color: .black.opacity(0.4), radius: 3, x: 0, y: 2))
+                ctx.fill(path, with: .color(.primary))
             }
         }
     }
@@ -141,6 +177,11 @@ struct PrizeWheelView: View {
             wedgePath.closeSubpath()
 
             context.fill(wedgePath, with: .color(Color(hex: item.colorHex)))
+
+            if item.id == highlightedItemID {
+                context.fill(wedgePath, with: .color(.white.opacity(0.25)))
+            }
+
             context.stroke(wedgePath, with: .color(.white.opacity(0.3)), lineWidth: 1)
 
             let bisector = startAngle + wedgeAngle / 2
@@ -151,7 +192,7 @@ struct PrizeWheelView: View {
                 angle: bisector,
                 center: center,
                 radius: radius,
-                textColor: .white
+                textColor: wedgeColor.isDark ? .white : .black
             )
         }
 

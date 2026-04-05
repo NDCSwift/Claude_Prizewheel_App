@@ -17,15 +17,11 @@ PrizeWheel is a SwiftUI app that lets you build a fully custom spinning prize wh
 - **Complete SwiftData example** — win history is persisted and grouped across launches, showing real persistence patterns
 - **Copy-paste starter** — haptics, deceleration animation, custom colours, and CRUD item management are all wired up
 
-## 📺 From the NoahDoesCoding YouTube Channel
-
-This project was built on-camera at [@NoahDoesCoding97](https://www.youtube.com/@NoahDoesCoding97). Watch the full build to see every prompt, decision, and mistake in real time.
-
----
-
 ## 📺 Watch the Build
 
-[![Watch on YouTube](https://img.shields.io/badge/YouTube-Watch%20the%20Build-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/@NoahDoesCoding97)
+[![Watch on YouTube](https://img.shields.io/badge/YouTube-Watch%20the%20Build-red?style=for-the-badge&logo=youtube)](https://youtu.be/H60DI9DzaSQ)
+
+> This project was built on-camera at [@NoahDoesCoding97](https://www.youtube.com/@NoahDoesCoding97). Watch the full build to see every prompt, decision, and mistake in real time.
 
 **Prerequisites — watch these first:**
 - [CLAUDE.md Masterclass](https://youtu.be/0UaqjKb3QHM)
@@ -121,3 +117,5 @@ PrizeWheel/
 - Xcode 15+
 - iOS 17+
 - No third-party dependencies
+
+📺 [Watch the build on YouTube](https://youtu.be/H60DI9DzaSQ)

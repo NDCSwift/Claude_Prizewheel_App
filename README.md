@@ -6,6 +6,23 @@ Built on the [NoahDoesCoding YouTube channel](https://www.youtube.com/@NoahDoesC
 
 ---
 
+## 🤔 What this is
+
+PrizeWheel is a SwiftUI app that lets you build a fully custom spinning prize wheel — add your own items, pick colours, spin it, and track who won. It was built live using Claude Code and Xcode's AI agent as a real-world demonstration of structured AI-assisted development, not just a toy example.
+
+## ✅ Why you'd use it
+
+- **Learn agentic coding workflows** — see exactly which prompts produced which code, and why the prompts were structured that way
+- **Reusable SwiftUI Canvas drawing pattern** — the wheel is drawn with `Canvas`, a technique you can apply to charts, games, and custom visuals
+- **Complete SwiftData example** — win history is persisted and grouped across launches, showing real persistence patterns
+- **Copy-paste starter** — haptics, deceleration animation, custom colours, and CRUD item management are all wired up
+
+## 📺 From the NoahDoesCoding YouTube Channel
+
+This project was built on-camera at [@NoahDoesCoding97](https://www.youtube.com/@NoahDoesCoding97). Watch the full build to see every prompt, decision, and mistake in real time.
+
+---
+
 ## 📺 Watch the Build
 
 [![Watch on YouTube](https://img.shields.io/badge/YouTube-Watch%20the%20Build-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/@NoahDoesCoding97)
@@ -34,8 +51,8 @@ Built on the [NoahDoesCoding YouTube channel](https://www.youtube.com/@NoahDoesC
 ### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/NDCSwift/REPO-NAME.git
-cd REPO-NAME
+git clone https://github.com/NDCSwift/Claude_Prizewheel_App.git
+cd Claude_Prizewheel_App
 ```
 
 Or select **Clone Git Repository…** when Xcode launches.
@@ -96,6 +113,7 @@ PrizeWheel/
 │   └── Color+Hex.swift
 └── PrizeWheelApp.swift
 ```
+
 ---
 
 ## 📦 Requirements

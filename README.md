@@ -2,7 +2,7 @@
 
 A fully custom SwiftUI prize wheel built from scratch using Claude Code and Xcode's built-in Claude agent. Custom items, colours, spin animation, SwiftData persistence, win history, and haptics.
 
-Built on the [NoahDoesCoding YouTube channel](https://www.youtube.com/@NoahDoesCoding97) as a prompting strategy demonstration — every prompt is documented below.
+Built on the [NoahDoesCoding YouTube channel](https://www.youtube.com/@noahdoescoding) as a prompting strategy demonstration — every prompt is documented below.
 
 ---
 
@@ -21,7 +21,7 @@ PrizeWheel is a SwiftUI app that lets you build a fully custom spinning prize wh
 
 [![Watch on YouTube](https://img.shields.io/badge/YouTube-Watch%20the%20Build-red?style=for-the-badge&logo=youtube)](https://youtu.be/H60DI9DzaSQ)
 
-> This project was built on-camera at [@NoahDoesCoding97](https://www.youtube.com/@NoahDoesCoding97). Watch the full build to see every prompt, decision, and mistake in real time.
+> This project was built on-camera at [@noahdoescoding](https://www.youtube.com/@noahdoescoding). Watch the full build to see every prompt, decision, and mistake in real time.
 
 **Prerequisites — watch these first:**
 - [CLAUDE.md Masterclass](https://youtu.be/0UaqjKb3QHM)
